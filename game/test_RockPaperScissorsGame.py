@@ -98,17 +98,17 @@ def test_scissors_scissors():
 
 
 def test_empty_first_input():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        for i in "RPS":
+    game = RockPaperScissors()
+    for i in "RPS":
+        with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
             game.judge('', i)
     pass
 
 
 def test_empty_second_input():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        for i in "RPS":
+    game = RockPaperScissors()
+    for i in "RPS":
+        with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
             game.judge(i, '')
     pass
 
