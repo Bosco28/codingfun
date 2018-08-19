@@ -2,9 +2,6 @@ from RockPaperScissorsGame import RockPaperScissors
 from GameInputException import GameInputException
 import pytest
 
-invalid_input1 = 'A'
-invalid_input2 = 'ABC'
-
 # Testing is_valid_input
 # ================================================================
 
@@ -31,12 +28,10 @@ def test_check_input_empty():
 
 def test_check_input_invalid_character():
     game = RockPaperScissors()
-    assert not game.is_valid_input(invalid_input1)
-
-
-def test_check_input_invalid_word():
-    game = RockPaperScissors()
-    assert not game.is_valid_input(invalid_input2)
+    for c in range(128):
+        char = chr(c).upper()
+        if char not in "RPS":
+            assert not game.is_valid_input(char)
 
 # Testing generate_input
 # ================================================================
@@ -44,8 +39,14 @@ def test_check_input_invalid_word():
 
 def test_generate_valid_input():
     game = RockPaperScissors()
-    for _ in range(100):
-        assert game.is_valid_input(game.generate_input())
+    freq = {'R': False, 'P': False, 'S': False}
+    for _ in range(1000):
+        i = game.generate_input()
+        assert game.is_valid_input(i)
+        freq[i] = True
+    assert freq['R']
+    assert freq['P']
+    assert freq['S']
 
 # Testing judge
 # ================================================================
@@ -99,14 +100,16 @@ def test_scissors_scissors():
 def test_empty_first_input():
     with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
         game = RockPaperScissors()
-        game.judge('', 'R')
+        for i in "RPS":
+            game.judge('', i)
     pass
 
 
 def test_empty_second_input():
     with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
         game = RockPaperScissors()
-        game.judge('R', '')
+        for i in "RPS":
+            game.judge(i, '')
     pass
 
 
@@ -118,56 +121,22 @@ def test_empty_both_inputs():
 
 
 def test_invalid_first_input_character():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input1, '')
-    pass
-
-
-def test_invalid_first_input_word():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input2, '')
+    game = RockPaperScissors()
+    for c in range(128):
+        char = chr(c).upper()
+        if char not in "RPS":
+            for i in "RPS":
+                with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
+                    game.judge(char, i)
     pass
 
 
 def test_invalid_second_input_character():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge('', invalid_input1)
-    pass
-
-
-def test_invalid_second_input_word():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge('', invalid_input2)
-    pass
-
-
-def test_invalid_both_inputs_character():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input1, invalid_input1)
-    pass
-
-
-def test_invalid_both_inputs_word():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input2, invalid_input2)
-    pass
-
-
-def test_invalid_both_inputs_word_character():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input2, invalid_input1)
-    pass
-
-
-def test_invalid_both_inputs_character_word():
-    with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
-        game = RockPaperScissors()
-        game.judge(invalid_input1, invalid_input2)
+    game = RockPaperScissors()
+    for c in range(128):
+        char = chr(c).upper()
+        if char not in "RPS":
+            for i in "RPS":
+                with pytest.raises(GameInputException, message="Invalid Input. Please try again.\n"):
+                    game.judge(i, char)
     pass
