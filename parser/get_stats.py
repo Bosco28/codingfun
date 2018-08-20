@@ -25,6 +25,6 @@ if __name__ == '__main__':
     max_rate = rates[len(rates)-1]
     min_rate = rates[0]
     mid_rate = rates[len(rates)//2]
-    print("Max average rate: " + str(max_rate) + "Mbps at " + average_rates[max_rate])
-    print("Mid average rate: " + str(mid_rate) + "Mbps at " + average_rates[min_rate])
-    print("Min average rate: " + str(min_rate) + "Mbps at " + average_rates[min_rate])
+    print("Max average rate: " + str(max_rate) + "MBps at " + average_rates[max_rate])
+    print("Mid average rate: " + str(mid_rate) + "MBps at " + average_rates[min_rate])
+    print("Min average rate: " + str(min_rate) + "MBps at " + average_rates[min_rate])
